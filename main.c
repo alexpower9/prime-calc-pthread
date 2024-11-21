@@ -55,6 +55,8 @@ int main(int argc, char* argv[]) {
     pthread_join(p_threads[i], NULL);
   }
 
+  pthread_mutex_destroy(&mutex);
+
   FILE *primes = fopen("primes.txt", "w");
 
   //Now loop through threads list, add them to txt file 
@@ -68,6 +70,9 @@ int main(int argc, char* argv[]) {
 
     //Now free list 
     freeList(thread_info[i].list);
+
+    //and actually the list itself, oops
+    free(thread_info[i].list);
   }
 
   fclose(primes); //close the file 
